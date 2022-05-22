@@ -1,0 +1,161 @@
+﻿@model ApartmentsRentalManagement1.Models.Payment
+
+@{
+    ViewBag.Title = "Edit Payment";
+    Layout = "~/Views/Shared/_Management.cshtml";
+}
+
+<h2 class="bold common-font blue text-center">Edit Rent Payment</h2>
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal common-font">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.PaymentId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReceiptNumber, htmlAttributes: new { @class = "control-label col-md-5 blue" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.ReceiptNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReceiptNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeNumber, htmlAttributes: new { @class = "control-label col-md-5 blue" })
+            <div class="col-md-7">
+                @Html.TextBox("EmployeeNumber", null, htmlAttributes: new { @class = "form-control empl-number" })
+                @Html.ValidationMessageFor(model => model.EmployeeNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-5 blue">Employee Details</label>
+            <div class="col-md-7">
+                @Html.TextBox("EmployeeDetails", null,
+                              htmlAttributes: new { @class = "form-control employee-details", disabled = "disabled" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContractNumber, htmlAttributes: new { @class = "control-label col-md-5 blue" })
+            <div class="col-md-7">
+                @Html.TextBox("ContractNumber", null, htmlAttributes: new { @class = "form-control contract-number" })
+                @Html.ValidationMessageFor(model => model.ContractNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-5 blue">Contract Details</label>
+            <div class="col-md-7">
+                @Html.TextArea("ContractDetails", null,
+                               htmlAttributes: new { @class = "form-control contract-details", rows = "3", disabled = "disabled" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-5 blue">Apartment Details</label>
+            <div class="col-md-7">
+                @Html.TextArea("ApartmentDetails", null,
+                               htmlAttributes: new { @class = "form-control unit-details", rows = "2", disabled = "disabled" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentDate, htmlAttributes: new { @class = "control-label col-md-5 blue" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.PaymentDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PaymentDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-5 blue" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-5 blue" })
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-5">
+                @Html.ActionLink("Rent Payments", "Index")
+            </label>
+            <div class="col-md-7">
+                <input type="submit" value="Update Rent Payment" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".empl-number").blur(function (event) {
+                $.ajax({
+                    method: "GET",
+                    url: "/api/Employees",
+                    success: function (data) {
+                        $.each(data, function (index, staff) {
+                            if (staff["EmployeeNumber"] === $(".empl-number").val()) {
+                                $(".employee-details").val(staff["FirstName"] + " " + staff["LastName"]
+                                                                              + " (" + staff["EmploymentTitle"] + ")");
+                            } // if
+                        }); // $.each function
+                    } // success function
+                }); // $.ajax
+            }); // blur
+
+            var unitNbr = "";
+
+            $(".contract-number").blur(function (event) {
+                $.ajax({
+                    method: "GET",
+                    url: "/api/RentalContracts",
+                    success: function (data) {
+                        $.each(data, function (index, engagement) {
+                            if (engagement["ContractNumber"] === $(".contract-number").val()) {
+                                $(".contract-details").val("Contract # " + engagement["ContractNumber"] + " for "
+                                                                         + engagement["FirstName"] + " " + engagement["LastName"]
+                                                                         + " (" + engagement["MaritalStatus"] + ", "
+                                                                         + engagement["NumberOfChildren"]
+                                                                         + " child(dren)); rents Unit #" + engagement["UnitNumber"]
+                                                                         + " since " + engagement["RentStartDate"] + ".");
+
+                                unitNbr = engagement["UnitNumber"];
+
+                                // $(".contract-details").val(engagement["Description"]);
+                            } // if
+                        }); // $.each function
+                    } // success function
+                }); // $.ajax
+
+                $.ajax({
+                    method: "GET",
+                    url: "/api/Apartments",
+                    success: function (data) {
+                        $.each(data, function (index, apart) {
+                            if (apart["UnitNumber"] === unitNbr) {
+                                $(".unit-details").val(apart["Residence"]);
+                            } // if
+                        }); // $.each function
+                    } // success function
+                }); // $.ajax
+            }); // blur
+        }); // $(document)
+    </script>
+}

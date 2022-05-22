@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ApartmentsRentalManagement1.Models.Payment>
+
+@{
+    ViewBag.Title = "Rent Payments";
+    Layout = "~/Views/Shared/_Management.cshtml";
+}
+
+<h2 class="bold blue common-font text-center">Rent Payments</h2>
+
+<table class="table table-hover common-font">
+    <tr>
+        <th class="text-center">@Html.DisplayNameFor(model => model.PaymentId)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.ReceiptNumber)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.EmployeeNumber)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.ContractNumber)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.PaymentDate)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.Amount)</th>
+        <th class="text-center">@Html.DisplayNameFor(model => model.Notes)</th>
+        <th class="text-center">@Html.ActionLink("Process Rent Contract", "Create")</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.PaymentId)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.ReceiptNumber)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.EmployeeNumber)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.ContractNumber)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.PaymentDate)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.Amount)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.Notes)</td>
+            <td class="text-center">
+                @Html.ActionLink("Edit", "Edit", new { id = item.PaymentId }) ::
+                @Html.ActionLink("Details", "Details", new { id = item.PaymentId }) ::
+                @Html.ActionLink("Delete", "Delete", new { id = item.PaymentId })
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,56 @@
+﻿@model ApartmentsRentalManagement1.Models.RentalContract
+
+@{
+    ViewBag.Title = "Delete Rent Contract";
+    Layout = "~/Views/Shared/_Management.cshtml";
+}
+
+<h2 class="bold common-font blue text-center">Delete Rent Contract</h2>
+
+<hr />
+
+<h3 class="common-font blue text-center">Are you sure you want to delete or cancel this rent contract?</h3>
+
+<div class="containment">
+    <dl class="dl-horizontal common-font">
+        <dt>@Html.DisplayNameFor(model => model.RentalContractId)</dt>
+        <dd>@Html.DisplayFor(model => model.RentalContractId)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ContractNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.ContractNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.EmployeeNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.EmployeeNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ContractDate)</dt>
+        <dd>@Html.DisplayFor(model => model.ContractDate)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.FirstName)</dt>
+        <dd>@Html.DisplayFor(model => model.FirstName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.LastName)</dt>
+        <dd>@Html.DisplayFor(model => model.LastName)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.MaritalStatus)</dt>
+        <dd>@Html.DisplayFor(model => model.MaritalStatus)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.NumberOfChildren)</dt>
+        <dd>@Html.DisplayFor(model => model.NumberOfChildren)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.UnitNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.UnitNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.RentStartDate)</dt>
+        <dd>@Html.DisplayFor(model => model.RentStartDate)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete/Cancel Rent Contract" class="btn btn-primary" /> ::
+            @Html.ActionLink("Rent Contracts", "Index")
+        </div>
+    }
+</div>

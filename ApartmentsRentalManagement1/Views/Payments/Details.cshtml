@@ -1,0 +1,41 @@
+﻿@model ApartmentsRentalManagement1.Models.Payment
+
+@{
+    ViewBag.Title = "Payment Details";
+    Layout = "~/Views/Shared/_Management.cshtml";
+}
+
+<h2 class="bold blue common-font text-center">Payment Details</h2>
+
+<hr />
+
+<div class="containment">
+    <dl class="dl-horizontal common-font">
+        <dt>@Html.DisplayNameFor(model => model.PaymentId)</dt>
+        <dd>@Html.DisplayFor(model => model.PaymentId)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ReceiptNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.ReceiptNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.EmployeeNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.EmployeeNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.ContractNumber)</dt>
+        <dd>@Html.DisplayFor(model => model.ContractNumber)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.PaymentDate)</dt>
+        <dd>@Html.DisplayFor(model => model.PaymentDate)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Amount)</dt>
+        <dd>@Html.DisplayFor(model => model.Amount)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.Notes)</dt>
+        <dd>@Html.DisplayFor(model => model.Notes)</dd>
+    </dl>
+</div>
+
+<p class="text-center">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PaymentId }) ::
+    @Html.ActionLink("Delete this Rent Payment", "Delete", new { id = Model.PaymentId }) ::
+    @Html.ActionLink("Rent Payments", "Index")
+</p>
